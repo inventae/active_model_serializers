@@ -1,7 +1,7 @@
 module ActiveModel
   module Serializable
     def as_json(options={})
-      instrument('!serialize') do
+      instrumenta('!serialize') do
         if root = options.fetch(:root, json_key)
           hash = { root => serializable_object }
           hash.merge!(serializable_data)
@@ -25,7 +25,7 @@ module ActiveModel
     end
 
     private
-    def instrument(action, &block)
+    def instrumenta(action, &block)
       payload = instrumentation_keys.inject({ serializer: self.class.name }) do |payload, key|
         payload[:payload] = self.instance_variable_get(:"@#{key}")
         payload
